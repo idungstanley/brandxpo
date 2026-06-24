@@ -1,150 +1,153 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
 
-const navLinks = [
-  { name: "Capabilities",  href: "#features"      },
-  { name: "Process",       href: "#how-it-works"  },
-  { name: "Infra",         href: "#infra"          },
-  { name: "Integrations",  href: "#integrations"  },
-  { name: "Security",      href: "#security"      },
-];
+const links = ["Services", "Process", "Work", "Pricing", "Contact"];
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   return (
-    <header
-      className={`fixed z-50 transition-all duration-500 ${
-        isScrolled 
-          ? "top-4 left-4 right-4" 
-          : "top-0 left-0 right-0"
-      }`}
-    >
-      <nav 
-        className={`mx-auto transition-all duration-500 ${
-          isScrolled || isMobileMenuOpen
-            ? "bg-background/80 backdrop-blur-xl border border-foreground/10 rounded-2xl shadow-lg max-w-300"
-            : "bg-transparent max-w-350"
-        }`}
+    <>
+      <header
+        style={{
+          position: "fixed",
+          zIndex: 50,
+          top: scrolled ? 16 : 0,
+          left: scrolled ? 16 : 0,
+          right: scrolled ? 16 : 0,
+          transition: "top .35s var(--ease-standard), left .35s var(--ease-standard), right .35s var(--ease-standard)",
+        }}
       >
-        <div 
-          className={`flex items-center justify-between transition-all duration-500 px-6 lg:px-8 ${
-            isScrolled ? "h-14" : "h-20"
-          }`}
+        <nav
+          style={{
+            margin: "0 auto",
+            maxWidth: scrolled ? 1200 : 1400,
+            height: scrolled ? 56 : 72,
+            padding: "0 24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            background: scrolled || menuOpen
+              ? "color-mix(in oklab, var(--wine-1) 95%, transparent)"
+              : "transparent",
+            color: "var(--cream-1)",
+            backdropFilter: scrolled || menuOpen ? "blur(12px)" : "none",
+            border: scrolled
+              ? "1px solid color-mix(in oklab, var(--cream-1) 12%, transparent)"
+              : "1px solid transparent",
+            borderRadius: scrolled ? 16 : 0,
+            transition: "all .35s var(--ease-standard)",
+          }}
         >
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-            <img src="/brandxpo-logo.png" alt="Logo" className="h-full w-40" />
+          <a href="#" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+            <img src="/brandxpo-logo.png" alt="BrandXpo Logo" className="h-full w-40" />
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-12">
-            {navLinks.map((link) => (
+          {/* Desktop nav links */}
+          <div className="bxp-nav-desktop">
+            {links.map((l) => (
               <a
-                key={link.name}
-                href={link.href}
-                className={`text-sm transition-colors duration-300 relative group ${isScrolled ? "text-foreground/70 hover:text-foreground" : "text-white/70 hover:text-white"}`}
+                key={l}
+                href={`#${l.toLowerCase()}`}
+                style={{ color: "color-mix(in oklab, var(--cream-1) 70%, transparent)", fontSize: 13, textDecoration: "none" }}
               >
-                {link.name}
-                <span className={`absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-foreground" : "bg-white"}`} />
+                {l}
               </a>
             ))}
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
-            <a href="#" className={`transition-all duration-500 ${isScrolled ? "text-xs text-foreground/70 hover:text-foreground" : "text-sm text-white/70 hover:text-white"}`}>
-              Sign in
+          <div className="bxp-nav-cta">
+            <a href="#" style={{ color: "color-mix(in oklab, var(--cream-1) 70%, transparent)", fontSize: 13, textDecoration: "none" }}>
+              Client login
             </a>
-            <Button
-              size="sm"
-              className={`rounded-full transition-all duration-500 ${isScrolled ? "bg-foreground hover:bg-foreground/90 text-background px-4 h-8 text-xs" : "bg-white hover:bg-white/90 text-black px-6"}`}
+            <a
+              href="#pricing"
+              style={{
+                display: "inline-flex", alignItems: "center", justifyContent: "center",
+                background: "var(--cream-1)", color: "var(--wine-1)",
+                fontSize: 13, fontWeight: 500, fontFamily: "var(--font-sans)",
+                textDecoration: "none", padding: "0 20px", height: 36, borderRadius: 999,
+              }}
             >
-              Deploy agent
-            </Button>
+              Get an offer
+            </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Hamburger */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 transition-colors duration-500 ${isScrolled || isMobileMenuOpen ? "text-foreground" : "text-white"}`}
+            className="bxp-hamburger"
+            onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
+            style={{ color: "var(--cream-1)" }}
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
+            {menuOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
             ) : (
-              <Menu className="w-6 h-6" />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" />
+              </svg>
             )}
           </button>
-        </div>
+        </nav>
+      </header>
 
-      </nav>
-      
-      {/* Mobile Menu - Full Screen Overlay */}
-      <div
-        className={`md:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
-          isMobileMenuOpen 
-            ? "opacity-100 pointer-events-auto" 
-            : "opacity-0 pointer-events-none"
-        }`}
-        style={{ top: 0 }}
-      >
-        <div className="flex flex-col h-full px-8 pt-28 pb-8">
-          {/* Navigation Links */}
-          <div className="flex-1 flex flex-col justify-center gap-8">
-            {navLinks.map((link, i) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-5xl font-display text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                  isMobileMenuOpen 
-                    ? "opacity-100 translate-y-0" 
-                    : "opacity-0 translate-y-4"
-                }`}
-                style={{ transitionDelay: isMobileMenuOpen ? `${i * 75}ms` : "0ms" }}
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-          
-          {/* Bottom CTAs */}
-          <div className={`flex gap-4 pt-8 border-t border-foreground/10 transition-all duration-500 ${
-            isMobileMenuOpen 
-              ? "opacity-100 translate-y-0" 
-              : "opacity-0 translate-y-4"
-          }`}
-          style={{ transitionDelay: isMobileMenuOpen ? "300ms" : "0ms" }}
+      {/* Mobile menu */}
+      <div className={`bxp-mobile-menu${menuOpen ? " open" : ""}`}>
+        <nav style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, justifyContent: "center" }}>
+          {links.map((l, i) => (
+            <a
+              key={l}
+              href={`#${l.toLowerCase()}`}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(2.5rem, 10vw, 4rem)",
+                lineHeight: 1.1,
+                color: i === 0 ? "var(--cream-0)" : `color-mix(in oklab, var(--cream-1) ${80 - i * 15}%, transparent)`,
+                textDecoration: "none",
+                transition: "color .2s var(--ease-standard)",
+              }}
+            >
+              {l}
+            </a>
+          ))}
+        </nav>
+        <div style={{ paddingTop: 32, borderTop: "1px solid color-mix(in oklab, var(--cream-1) 12%, transparent)", display: "flex", flexDirection: "column", gap: 16 }}>
+          <a href="#" style={{ color: "color-mix(in oklab, var(--cream-1) 55%, transparent)", fontSize: 14, textDecoration: "none", fontFamily: "var(--font-sans)" }}>
+            Client login
+          </a>
+          <a
+            href="#pricing"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              background: "var(--cream-1)", color: "var(--wine-1)",
+              fontSize: 15, fontWeight: 500, fontFamily: "var(--font-sans)",
+              textDecoration: "none", padding: "14px 0", borderRadius: 999,
+            }}
           >
-            <Button 
-              variant="outline" 
-              className="flex-1 rounded-full h-14 text-base"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Sign in
-            </Button>
-            <Button 
-              className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Deploy agent
-            </Button>
-          </div>
+            Get an offer
+          </a>
         </div>
       </div>
-    </header>
+    </>
   );
 }
