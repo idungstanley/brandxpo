@@ -1,218 +1,144 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Check, Zap } from "lucide-react";
+import { useState } from "react";
 
 const plans = [
   {
-    name: "Explorer",
-    description: "For tinkering and small automations",
-    price: { monthly: 0, annual: 0 },
-    features: [
-      "3 concurrent agents",
-      "1,000 tasks/month",
-      "Community support",
-      "Basic logging",
-      "Public integrations",
-    ],
-    cta: "Start free",
-    highlight: false,
+    name: "Spark", desc: "For new labels finding their feet",
+    m: 499, a: 449,
+    features: ["2 graphics / day", "Social media management", "1 monthly strategy call", "Shared brand sheet"],
+    cta: "Start with Spark",
   },
   {
-    name: "Builder",
-    description: "For teams shipping with agents",
-    price: { monthly: 79, annual: 65 },
-    features: [
-      "25 concurrent agents",
-      "50,000 tasks/month",
-      "Priority support",
-      "Full audit trails",
-      "Private integrations",
-      "Team workspaces",
-      "Custom agent roles",
-    ],
-    cta: "Start trial",
-    highlight: true,
+    name: "Studio", desc: "For growing brands that want every surface live",
+    m: 1499, a: 1299,
+    features: ["Everything in Spark", "1 commercial video / month", "SEO — technical + content", "UGC sourcing (1 creator / mo)", "Weekly creative review"],
+    cta: "Choose Studio", highlight: true,
   },
   {
-    name: "Scale",
-    description: "For agent-first organizations",
-    price: { monthly: null, annual: null },
-    features: [
-      "Unlimited agents",
-      "Unlimited tasks",
-      "24/7 dedicated support",
-      "On-premise deployment",
-      "SLA guarantee",
-      "Custom LLM routing",
-      "Advanced security",
-      "Dedicated compute",
-    ],
-    cta: "Contact sales",
-    highlight: false,
+    name: "Atelier", desc: "For established labels with a full-time pipeline",
+    m: null, a: null,
+    features: ["Everything in Studio", "Custom website + storefront", "2 commercial videos / month", "Dedicated brand director", "Quarterly recalibration"],
+    cta: "Talk to us",
   },
 ];
 
 export function PricingSection() {
-  const [isAnnual, setIsAnnual] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [annual, setAnnual] = useState(true);
 
   return (
-    <section id="pricing" ref={sectionRef} className="relative py-32 lg:py-40">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        {/* Header - Dramatic offset */}
-        <div className="grid lg:grid-cols-12 gap-8 mb-20">
-          <div className="lg:col-span-7">
-            <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
-              <span className="w-12 h-px bg-foreground/30" />
+    <section id="pricing" className="bxp-section-pad" style={{ background: "var(--surface-page)" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+        <div className="bxp-grid-header-sm" style={{ alignItems: "end" }}>
+          <div>
+            <div style={{ marginBottom: 24, display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-muted)" }}>
+              <span style={{ width: 32, height: 1, background: "currentColor", opacity: 0.4, display: "inline-block" }} />
               Pricing
-            </span>
-            <h2 className={`text-6xl md:text-7xl lg:text-[128px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}>
-              Pay for
-              <br />
-              <span className="text-stroke">results.</span>
+            </div>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 8vw, 8rem)", lineHeight: 0.9, letterSpacing: "-0.01em", margin: 0, color: "var(--text-strong)", fontWeight: 400 }}>
+              One monthly fee.<br />
+              <span style={{ WebkitTextStroke: "1.5px currentColor", WebkitTextFillColor: "transparent" } as React.CSSProperties}>No surprises.</span>
             </h2>
           </div>
-          
-          <div className="lg:col-span-5 relative p-0 h-96 lg:h-auto">
-            {/* Whale image */}
-            <div className={`absolute inset-0 pointer-events-none transition-all duration-1000 delay-100 ${
-              isVisible ? "opacity-100" : "opacity-0"
-            }`}>
-              <img
-                src="/images/whale.png"
-                alt="Organic whale"
-                className="w-full h-full object-contain object-center"
-              />
+          <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "end" }}>
+            <div style={{ display: "inline-flex", border: "1px solid var(--border-default)", borderRadius: 999, padding: 4, fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+              {["Monthly", "Annual"].map((label, i) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => setAnnual(i === 1)}
+                  style={{
+                    padding: "8px 18px",
+                    background: (i === 1) === annual ? "var(--brand-primary)" : "transparent",
+                    color: (i === 1) === annual ? "var(--brand-on-primary)" : "var(--text-muted)",
+                    border: 0, borderRadius: 999, cursor: "pointer",
+                    fontFamily: "inherit", fontSize: "inherit", letterSpacing: "inherit", textTransform: "inherit",
+                    transition: "background .2s var(--ease-standard), color .2s var(--ease-standard)",
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
             </div>
-
           </div>
         </div>
 
-        {/* Pricing cards - Horizontal layout with overlap */}
-        <div className="relative">
-          <div className="grid lg:grid-cols-3 gap-4 lg:gap-0">
-            {plans.map((plan, index) => (
-              <div
-                key={plan.name}
-                className={`relative bg-background border transition-all duration-700 ${
-                  plan.highlight 
-                    ? "border-foreground lg:-mx-2 lg:z-10 lg:scale-105" 
-                    : "border-foreground/10 lg:first:-mr-2 lg:last:-ml-2"
-                } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                {/* Popular badge */}
-                {plan.highlight && (
-                  <div className="absolute -top-4 left-8 right-8 flex justify-center">
-                    <span className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background text-xs font-mono uppercase tracking-widest">
-                      <Zap className="w-3 h-3" />
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-
-                <div className="p-8 lg:p-10">
-                  {/* Plan header */}
-                  <div className="mb-8 pb-8 border-b border-foreground/10">
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="text-2xl lg:text-3xl font-display mt-2">{plan.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-2">{plan.description}</p>
-                  </div>
-
-                  {/* Price */}
-                  <div className="mb-8">
-                    {plan.price.monthly !== null ? (
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-5xl lg:text-6xl font-display">
-                          ${isAnnual ? plan.price.annual : plan.price.monthly}
-                        </span>
-                        <span className="text-muted-foreground text-sm">/month</span>
-                      </div>
-                    ) : (
-                      <span className="text-4xl font-display">Custom</span>
-                    )}
-                    {plan.price.monthly !== null && plan.price.monthly > 0 && (
-                      <p className="text-xs text-muted-foreground mt-2 font-mono">
-                        {isAnnual ? "billed annually" : "billed monthly"}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Features */}
-                  <ul className="space-y-3 mb-10">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3">
-                        <Check className="w-4 h-4 text-[#eca8d6] mt-0.5 shrink-0" />
-                        <span className="text-sm text-muted-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA */}
-                  <button
-                    className={`w-full py-4 flex items-center justify-center gap-2 text-sm font-medium transition-all group ${
-                      plan.highlight
-                        ? "bg-foreground text-background hover:bg-foreground/90"
-                        : "border border-foreground/20 text-foreground hover:border-foreground hover:bg-foreground/5"
-                    }`}
-                  >
-                    {plan.cta}
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </button>
+        <div className="bxp-grid-pricing">
+          {plans.map((p, i) => (
+            <div
+              key={p.name}
+              className={p.highlight ? "bxp-pricing-card-highlight" : undefined}
+              style={{
+                background: "var(--surface-card)",
+                border: `1px solid ${p.highlight ? "var(--border-strong)" : "var(--border-default)"}`,
+                margin: p.highlight ? "-8px -2px" : "0",
+                position: "relative",
+                zIndex: p.highlight ? 2 : 1,
+                padding: 40,
+              }}
+            >
+              {p.highlight ? (
+                <div style={{ position: "absolute", top: -14, left: 32, right: 32, display: "flex", justifyContent: "center" }}>
+                  <span style={{ background: "var(--terracotta-3)", color: "var(--cream-0)", fontSize: 11, fontFamily: "var(--font-mono)", letterSpacing: "0.06em", textTransform: "uppercase", padding: "4px 14px", borderRadius: 999 }}>
+                    Most loved
+                  </span>
                 </div>
+              ) : null}
+
+              <div style={{ paddingBottom: 28, borderBottom: "1px solid var(--border-default)", marginBottom: 28 }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-muted)" }}>{String(i + 1).padStart(2, "0")}</span>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px, 3vw, 36px)", letterSpacing: "-0.01em", margin: "8px 0 6px", color: "var(--text-strong)", fontWeight: 400 }}>{p.name}</h3>
+                <p style={{ color: "var(--text-muted)", fontSize: 14, margin: 0 }}>{p.desc}</p>
               </div>
-            ))}
-          </div>
+
+              <div style={{ marginBottom: 28 }}>
+                {p.m !== null ? (
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(48px, 5vw, 64px)", color: "var(--text-strong)", letterSpacing: "-0.01em", lineHeight: 1 }}>${annual ? p.a : p.m}</span>
+                    <span style={{ color: "var(--text-muted)", fontSize: 14 }}>/month</span>
+                  </div>
+                ) : (
+                  <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(40px, 5vw, 56px)", color: "var(--text-strong)", letterSpacing: "-0.01em" }}>Custom</span>
+                )}
+                <p style={{ marginTop: 8, fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-muted)" }}>
+                  {p.m !== null
+                    ? (annual ? "billed annually · cancel any month" : "billed monthly · cancel any month")
+                    : "scoped per brand · quarterly retainers"}
+                </p>
+              </div>
+
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 36px", display: "grid", gap: 12 }}>
+                {p.features.map((f) => (
+                  <li key={f} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 14, color: "var(--text-muted)" }}>
+                    <span style={{ color: "var(--terracotta-3)", lineHeight: 1.4 }}>✓</span> {f}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="#contact"
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  width: "100%", padding: "12px 0",
+                  background: p.highlight ? "var(--brand-primary)" : "transparent",
+                  color: p.highlight ? "var(--brand-on-primary)" : "var(--text-strong)",
+                  border: `1px solid ${p.highlight ? "var(--brand-primary)" : "var(--border-default)"}`,
+                  borderRadius: 999,
+                  fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: 500,
+                  textDecoration: "none",
+                  transition: "background .2s var(--ease-standard)",
+                }}
+              >
+                {p.cta} →
+              </a>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom note with icons */}
-        <div className={`mt-20 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 pt-12 border-t border-foreground/10 transition-all duration-1000 delay-500 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}>
-          <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
-            <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-[#eca8d6]" />
-              Encrypted execution
-            </span>
-            <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-[#eca8d6]" />
-              Full audit logs
-            </span>
-            <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-[#eca8d6]" />
-              Multi-model routing
-            </span>
-          </div>
-          <a href="#" className="text-sm underline underline-offset-4 hover:text-foreground transition-colors">
-            Compare all features
-          </a>
-        </div>
+        <p style={{ marginTop: 48, fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-muted)", letterSpacing: "0.04em", textTransform: "uppercase", textAlign: "center" }}>
+          All plans include · brand sheet · weekly check-in · revisions until it&apos;s right
+        </p>
       </div>
-
-      <style jsx>{`
-        .text-stroke {
-          -webkit-text-stroke: 1.5px currentColor;
-          -webkit-text-fill-color: transparent;
-        }
-      `}</style>
     </section>
   );
 }

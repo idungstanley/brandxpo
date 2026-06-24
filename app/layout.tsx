@@ -21,9 +21,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'COMPUTE - AI Agents for Distributed Computing',
-  description: 'Deploy autonomous AI agents on distributed infrastructure. Offload complex tasks to intelligent workers that run 24/7.',
-  generator: 'v0.app',
+  title: 'BrandXpo Studio — Fashion & Beauty Brand Studio',
+  description: 'Websites, commercials, daily graphics, and SEO for fashion and beauty labels. Ship every week, not every quarter.',
 }
 
 export default function RootLayout({

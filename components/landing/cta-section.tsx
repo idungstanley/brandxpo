@@ -1,103 +1,57 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-
 export function CtaSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
-    });
-  };
-
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        <div
-          className={`relative border border-foreground transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-          onMouseMove={handleMouseMove}
-        >
-          {/* Spotlight effect */}
-          <div 
-            className="absolute inset-0 opacity-10 pointer-events-none transition-opacity duration-300"
+    <section id="contact" className="bxp-cta-section" style={{ background: "var(--surface-page)" }}>
+      <div
+        className="bxp-cta-inner"
+        style={{
+          maxWidth: 1400,
+          margin: "0 auto",
+          position: "relative",
+          border: "1px solid var(--border-strong)",
+        }}
+      >
+        {/* Corner decorations */}
+        <div style={{ position: "absolute", top: 0, right: 0, width: 96, height: 96, borderBottom: "1px solid var(--border-default)", borderLeft: "1px solid var(--border-default)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, width: 96, height: 96, borderTop: "1px solid var(--border-default)", borderRight: "1px solid var(--border-default)" }} />
+
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.25rem, 6vw, 5rem)", lineHeight: 0.95, letterSpacing: "-0.01em", margin: "0 0 28px", color: "var(--text-strong)", fontWeight: 400, maxWidth: 820 }}>
+          Ready for your<br />
+          next <span style={{ fontStyle: "italic", color: "var(--terracotta-3)" }}>drop</span>?
+        </h2>
+
+        <p style={{ maxWidth: 560, color: "var(--text-muted)", fontSize: "clamp(15px, 2vw, 18px)", lineHeight: 1.6, margin: "0 0 40px" }}>
+          We work with fashion and beauty brands ready to ship weekly, not quarterly. Tell us about your label — we&apos;ll send a written offer within 48 hours.
+        </p>
+
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <a
+            href="#"
             style={{
-              background: `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(0,0,0,0.15), transparent 40%)`
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              background: "var(--brand-primary)", color: "var(--brand-on-primary)",
+              fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: 500,
+              padding: "0 28px", height: 48, borderRadius: 999, textDecoration: "none",
             }}
-          />
-          
-          <div className="relative z-10 px-8 lg:px-16 py-16 lg:py-24">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-              {/* Left content */}
-              <div className="flex-1">
-                <h2 className="text-6xl md:text-7xl lg:text-[72px] font-display tracking-tight mb-8 leading-[0.95]">
-                  Ready to delegate
-                  <br />
-                  to AI agents?
-                </h2>
-
-                <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-xl">
-                  Join teams automating complex workflows with COMPUTE agents. 
-                  Deploy your first agent in minutes.
-                </p>
-
-                <div className="flex flex-col sm:flex-row items-start gap-4">
-                  <Button
-                    size="lg"
-                    className="bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group"
-                  >
-                    Deploy your first agent
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="h-14 px-8 text-base rounded-full border-foreground/20 hover:bg-foreground/5"
-                  >
-                    Book a demo
-                  </Button>
-                </div>
-
-                <p className="text-sm text-muted-foreground mt-8 font-mono">
-                  1,000 free tasks with COMPUTE
-                </p>
-              </div>
-
-              {/* Right image */}
-              <div className="hidden lg:flex items-end justify-center w-[600px] h-[650px] -mr-16">
-                <img
-                  src="/images/bridge.png"
-                  alt="Two trees connected by glowing arcs"
-                  className="w-full h-full object-contain object-bottom"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Decorative corner */}
-          <div className="absolute top-0 right-0 w-32 h-32 border-b border-l border-foreground/10" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 border-t border-r border-foreground/10" />
+          >
+            See our offer →
+          </a>
+          <a
+            href="#"
+            style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              background: "transparent", color: "var(--text-strong)",
+              fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: 500,
+              padding: "0 28px", height: 48, borderRadius: 999, textDecoration: "none",
+              border: "1px solid var(--border-default)",
+            }}
+          >
+            Book a consultation
+          </a>
         </div>
+
+        <p style={{ marginTop: 32, fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-muted)", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+          Now booking Q3 · 4 spots left
+        </p>
       </div>
     </section>
   );

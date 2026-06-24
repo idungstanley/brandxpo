@@ -1,225 +1,64 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
-const features = [
-  {
-    number: "01",
-    title: "Autonomous Execution",
-    description: "Deploy AI agents that work independently. They analyze, decide, and execute complex multi-step tasks without human intervention.",
-    stats: { value: "99.7%", label: "task completion" },
-  },
-  {
-    number: "02",
-    title: "Distributed Computing",
-    description: "Offload compute-heavy tasks to our global network. Your agents run on optimized infrastructure across 50+ regions worldwide.",
-    stats: { value: "50+", label: "global regions" },
-  },
-  {
-    number: "03",
-    title: "Multi-Agent Orchestration",
-    description: "Coordinate teams of specialized agents. They communicate, delegate, and collaborate to solve complex problems together.",
-    stats: { value: "1000x", label: "parallel execution" },
-  },
-  {
-    number: "04",
-    title: "Secure Sandboxing",
-    description: "Each agent runs in isolated environments. Full audit trails, encrypted execution, and zero data leakage between tasks.",
-    stats: { value: "0", label: "data breaches" },
-  },
+const services = [
+  { num: "01", title: "Website",                  body: "Bespoke storefronts and brand sites. Shopify or custom — fast, indexable, on-brand from the favicon up.",  cadence: "14-day launch" },
+  { num: "02", title: "SEO",                      body: "Technical + on-page + content. Built to rank in the queries your buyers already search.",                   cadence: "Always-on" },
+  { num: "03", title: "Graphics design",          body: "Two graphics every working day. Campaign visuals, social posts, lookbook spreads, product cards.",          cadence: "2 / day",   featured: true },
+  { num: "04", title: "Commercial video",         body: "One produced commercial per month for paid ads. Concept, shoot, edit, masters.",                            cadence: "1 / month" },
+  { num: "05", title: "Social media management",  body: "Calendar, captions, replies, reporting. Your feed runs on rhythm — not vibes.",                            cadence: "Always-on" },
+  { num: "06", title: "UGC + creator",            body: "Sourced creators shooting your product in their world. Raw + cut deliverables.",                           cadence: "On request" },
 ];
 
-// Floating dot particles visualization
-function ParticleVisualization() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameRef = useRef(0);
-  const mouseRef = useRef({ x: 0.5, y: 0.5 });
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: (e.clientX - rect.left) / rect.width,
-        y: (e.clientY - rect.top) / rect.height,
-      };
-    };
-    canvas.addEventListener("mousemove", handleMouseMove);
-
-    // Generate stable particle positions
-    const COUNT = 70;
-    const particles = Array.from({ length: COUNT }, (_, i) => {
-      const seed = i * 1.618;
-      return {
-        bx: ((seed * 127.1) % 1),
-        by: ((seed * 311.7) % 1),
-        phase: seed * Math.PI * 2,
-        speed: 0.4 + (seed % 0.4),
-        radius: 1.2 + (seed % 2.2),
-      };
-    });
-
-    let time = 0;
-    const render = () => {
-      const rect = canvas.getBoundingClientRect();
-      const w = rect.width;
-      const h = rect.height;
-
-      ctx.clearRect(0, 0, w, h);
-
-      const mx = mouseRef.current.x;
-      const my = mouseRef.current.y;
-
-      particles.forEach((p) => {
-        const flowX = Math.sin(time * p.speed * 0.4 + p.phase) * 38;
-        const flowY = Math.cos(time * p.speed * 0.3 + p.phase * 0.7) * 24;
-
-        const bx = p.bx * w;
-        const by = p.by * h;
-        const dx = p.bx - mx;
-        const dy = p.by - my;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const influence = Math.max(0, 1 - dist * 2.8);
-
-        const x = bx + flowX + influence * Math.cos(time + p.phase) * 36;
-        const y = by + flowY + influence * Math.sin(time + p.phase) * 36;
-
-        const pulse = Math.sin(time * p.speed + p.phase) * 0.5 + 0.5;
-        const alpha = 0.08 + pulse * 0.18 + influence * 0.3;
-
-        ctx.beginPath();
-        ctx.arc(x, y, p.radius + pulse * 0.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.fill();
-      });
-
-      time += 0.016;
-      frameRef.current = requestAnimationFrame(render);
-    };
-    render();
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(frameRef.current);
-    };
-  }, []);
-
+export function CapabilitiesSection() {
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 pointer-events-auto"
-      style={{ width: "100%", height: "100%" }}
-    />
-  );
-}
-
-export function FeaturesSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeFeature, setActiveFeature] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <section
-      id="features"
-      ref={sectionRef}
-      className="relative py-24 lg:py-32 overflow-hidden"
-    >
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        {/* Header - Full width with diagonal layout */}
-        <div className="relative mb-24 lg:mb-32">
-          <div className="grid lg:grid-cols-12 gap-8 items-end">
-            <div className="lg:col-span-7">
-              <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
-                <span className="w-12 h-px bg-foreground/30" />
-                Capabilities
-              </span>
-              <h2
-                className={`text-6xl md:text-7xl lg:text-[128px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-              >
-                Intelligent
-                <br />
-                <span className="text-muted-foreground">workers.</span>
-              </h2>
+    <section id="services" className="bxp-section-pad" style={{ background: "var(--surface-page)" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+        <div className="bxp-grid-header">
+          <div>
+            <div style={{ marginBottom: 24, display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-muted)" }}>
+              <span style={{ width: 32, height: 1, background: "currentColor", opacity: 0.4, display: "inline-block" }} />
+              Services
             </div>
-            <div className="lg:col-span-5 lg:pb-4">
-              <p className={`text-xl text-muted-foreground leading-relaxed transition-all duration-1000 delay-200 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              }`}>
-                Deploy autonomous AI agents that execute complex tasks across distributed infrastructure. No supervision required.
-              </p>
-            </div>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 8vw, 8rem)", lineHeight: 0.9, letterSpacing: "-0.01em", color: "var(--text-strong)", margin: 0, fontWeight: 400 }}>
+              Every surface,<br />
+              <span style={{ color: "var(--text-muted)" }}>covered.</span>
+            </h2>
           </div>
+          <p style={{ fontSize: "clamp(16px, 2vw, 20px)", lineHeight: 1.55, color: "var(--text-muted)", margin: 0 }}>
+            One studio for everything your fashion or beauty brand puts in front of a customer. Subscription pricing — predictable, monthly, no scope fights.
+          </p>
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid lg:grid-cols-12 gap-4 lg:gap-6">
-          {/* Large feature card */}
-          <div 
-            className={`lg:col-span-12 relative bg-black border border-foreground/10 min-h-[500px] overflow-hidden group transition-all duration-700 flex ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
-            onMouseEnter={() => setActiveFeature(0)}
-          >
-            {/* Left: text content */}
-            <div className="relative flex-1 p-8 lg:p-12 bg-black">
-              <ParticleVisualization />
-              <div className="relative z-10">
-                <span className="font-mono text-sm text-muted-foreground">{features[0].number}</span>
-                <h3 className="text-3xl lg:text-4xl font-display mt-4 mb-6 group-hover:translate-x-2 transition-transform duration-500">
-                  {features[0].title}
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-md mb-8">
-                  {features[0].description}
-                </p>
-                <div>
-                  <span className="text-5xl lg:text-6xl font-display">{features[0].stats.value}</span>
-                  <span className="block text-sm text-muted-foreground font-mono mt-2">{features[0].stats.label}</span>
-                </div>
+        <div className="bxp-grid-3">
+          {services.map((s) => (
+            <div
+              key={s.num}
+              style={{
+                background: "var(--surface-card)",
+                border: "1px solid var(--border-default)",
+                borderRadius: 4,
+                padding: 36,
+                minHeight: 280,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-muted)", letterSpacing: "0.06em" }}>{s.num}</span>
+                {s.featured ? (
+                  <span style={{ background: "var(--terracotta-3)", color: "var(--cream-0)", fontSize: 11, fontFamily: "var(--font-mono)", letterSpacing: "0.06em", textTransform: "uppercase", padding: "4px 12px", borderRadius: 999 }}>
+                    Most loved
+                  </span>
+                ) : null}
+              </div>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px, 3vw, 32px)", letterSpacing: "-0.01em", lineHeight: 1.05, margin: "0 0 14px", color: "var(--text-strong)", fontWeight: 400 }}>
+                {s.title}
+              </h3>
+              <p style={{ color: "var(--text-muted)", fontSize: 15, lineHeight: 1.6, margin: "0 0 24px", flex: 1 }}>{s.body}</p>
+              <div style={{ paddingTop: 16, borderTop: "1px solid var(--border-default)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-muted)" }}>Cadence</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-strong)", letterSpacing: "0.04em" }}>{s.cadence}</span>
               </div>
             </div>
-
-            {/* Right: mirrored image, full height */}
-            <div className="hidden lg:block relative w-[42%] shrink-0 overflow-hidden">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2812%29-ng3RrNnsPMJ5CrtOjcPTmhHg01W11q.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-cover object-center"
-                style={{ transform: "scaleX(-1)" }}
-              />
-              {/* Fade left edge into black */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent" />
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

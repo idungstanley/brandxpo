@@ -1,237 +1,74 @@
-"use client";
-
-import { useEffect, useState, useRef } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-
-const testimonials = [
+const quotes = [
   {
-    quote: "Our agents handle 80% of our customer support tickets autonomously. The ROI was immediate.",
-    author: "Sarah Chen",
-    role: "CTO",
-    company: "Meridian Labs",
-    metric: { value: "80%", label: "Ticket resolution" },
+    body: "BrandXpo runs every channel for us. Two graphics every morning, a commercial each month, and our drops sell out the day they post.",
+    who: "Sade A.", role: "Founder, NÜA Skin", tag: "Skincare · D2C", initials: "SA",
   },
   {
-    quote: "We deployed research agents that work 24/7. They surface insights we'd never find manually.",
-    author: "Marcus Webb",
-    role: "Head of Research",
-    company: "Flux Systems",
-    metric: { value: "10x", label: "Research output" },
+    body: "We went from posting twice a week to twice a day, and the look finally feels like a brand, not a Canva folder.",
+    who: "Maya L.", role: "Creative Director, Maison Forme", tag: "Fashion · RTW", initials: "ML",
   },
   {
-    quote: "The multi-agent orchestration is incredible. Complex workflows that took weeks now run in hours.",
-    author: "Elena Rodriguez",
-    role: "VP Engineering",
-    company: "Beacon AI",
-    metric: { value: "40x", label: "Faster workflows" },
-  },
-  {
-    quote: "Security was our biggest concern. The sandboxing and audit trails gave us full confidence.",
-    author: "James Liu",
-    role: "CISO",
-    company: "Prism Analytics",
-    metric: { value: "0", label: "Security incidents" },
+    body: "The website came in fourteen days. The shoot came in three. The studio just keeps moving and we keep selling.",
+    who: "Tomi K.", role: "CEO, ORÒ Fragrance", tag: "Fragrance · Luxury", initials: "TK",
   },
 ];
 
 export function TestimonialsSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const [direction, setDirection] = useState<"left" | "right">("right");
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDirection("right");
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const goTo = (index: number) => {
-    setDirection(index > activeIndex ? "right" : "left");
-    setActiveIndex(index);
-  };
-
-  const goPrev = () => {
-    setDirection("left");
-    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  const goNext = () => {
-    setDirection("right");
-    setActiveIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const activeTestimonial = testimonials[activeIndex];
-
   return (
-    <section ref={sectionRef} className="relative py-32 lg:py-40 bg-foreground text-background overflow-hidden">
-      {/* ASCII background pattern */}
-      <div className="absolute inset-0 font-mono text-[10px] text-background/[0.02] leading-tight overflow-hidden whitespace-pre select-none">
-        {Array.from({ length: 60 }, (_, i) => 
-          Array.from({ length: 100 }, () => 
-            Math.random() > 0.7 ? '"' : ' '
-          ).join("")
-        ).join("\n")}
-      </div>
-
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-20">
+    <section className="bxp-section-pad" style={{ background: "var(--surface-page)" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+        <div className="bxp-grid-header-sm">
           <div>
-            <span className="inline-flex items-center gap-3 text-sm font-mono text-background/40 mb-4">
-              <span className="w-12 h-px bg-background/20" />
-              Testimonials
-            </span>
-            <h2 className={`text-4xl lg:text-5xl font-display transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}>
-              Trusted by teams
-              <span className="text-background/40"> worldwide.</span>
+            <div style={{ marginBottom: 24, display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-muted)" }}>
+              <span style={{ width: 32, height: 1, background: "currentColor", opacity: 0.4, display: "inline-block" }} />
+              What clients say
+            </div>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 7vw, 6.5rem)", lineHeight: 0.95, letterSpacing: "-0.01em", color: "var(--text-strong)", margin: 0, fontWeight: 400 }}>
+              Labels that{" "}
+              <span style={{ fontStyle: "italic", color: "var(--terracotta-3)" }}>sell</span>{" "}
+              swear by us.
             </h2>
           </div>
-          
-          {/* Navigation arrows */}
-          <div className="hidden lg:flex items-center gap-2">
-            <button
-              onClick={goPrev}
-              className="p-4 border border-background/20 hover:bg-background/10 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={goNext}
-              className="p-4 border border-background/20 hover:bg-background/10 transition-colors"
-            >
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </div>
+          <p style={{ fontSize: "clamp(15px, 2vw, 18px)", lineHeight: 1.6, color: "var(--text-muted)", margin: 0 }}>
+            Founders, creative directors, and merchandisers who hand us their brand and watch the cadence pick up.
+          </p>
         </div>
 
-        {/* Main content - Split layout */}
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-          {/* Quote side */}
-          <div className="lg:col-span-7 relative">
-            {/* Large quote mark */}
-            <span className="absolute -left-4 -top-8 text-[200px] font-display text-background/5 leading-none select-none">
-              &ldquo;
-            </span>
-            
-            <div className="relative">
-              <blockquote 
-                key={activeIndex}
-                className="text-3xl lg:text-4xl xl:text-5xl font-display leading-[1.2] tracking-tight animate-fadeSlideIn"
-              >
-                {activeTestimonial.quote}
-              </blockquote>
-
-              {/* Author */}
-              <div className="mt-12 flex items-center gap-6">
-                <div className="w-14 h-14 rounded-full bg-background/10 flex items-center justify-center">
-                  <span className="font-display text-xl">
-                    {activeTestimonial.author.charAt(0)}
-                  </span>
-                </div>
-                <div>
-                  <p className="text-lg font-medium">{activeTestimonial.author}</p>
-                  <p className="text-background/60">
-                    {activeTestimonial.role}, {activeTestimonial.company}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Metric cards side */}
-          <div className="lg:col-span-5 flex flex-col justify-center gap-6">
-            {/* Active metric - Large */}
-            <div 
-              key={`metric-${activeIndex}`}
-              className="p-10 border border-background/20 bg-background/5 animate-fadeSlideIn"
+        <div className="bxp-grid-3">
+          {quotes.map((q) => (
+            <figure
+              key={q.who}
+              style={{
+                background: "var(--surface-card)",
+                border: "1px solid var(--border-default)",
+                borderRadius: 4,
+                padding: 36,
+                margin: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: 28,
+              }}
             >
-              <span className="text-7xl lg:text-8xl font-display block mb-4">
-                {activeTestimonial.metric.value}
-              </span>
-              <span className="text-lg text-background/60">
-                {activeTestimonial.metric.label}
-              </span>
-            </div>
-
-            {/* Progress indicators */}
-            <div className="flex gap-2">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => goTo(idx)}
-                  className="flex-1 h-1 bg-background/20 overflow-hidden"
-                >
-                  <div 
-                    className={`h-full bg-background transition-all duration-300 ${
-                      idx === activeIndex ? "w-full" : idx < activeIndex ? "w-full opacity-50" : "w-0"
-                    }`}
-                    style={idx === activeIndex ? { animation: "progress 8s linear forwards" } : {}}
-                  />
-                </button>
-              ))}
-            </div>
-
-            {/* Company list */}
-            <div className="mt-4 pt-6 border-t border-background/10">
-              <span className="text-xs font-mono text-background/30 uppercase tracking-widest block mb-4">
-                Featured companies
-              </span>
-              <div className="flex flex-wrap gap-3">
-                {testimonials.map((t, idx) => (
-                  <button
-                    key={t.company}
-                    onClick={() => goTo(idx)}
-                    className={`px-4 py-2 text-sm border transition-all ${
-                      idx === activeIndex 
-                        ? "border-background/40 text-background" 
-                        : "border-background/10 text-background/40 hover:border-background/30"
-                    }`}
-                  >
-                    {t.company}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: 56, lineHeight: 0.4, color: "var(--terracotta-3)", display: "block", marginBottom: -12 }}>"</span>
+              <blockquote style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, letterSpacing: "-0.01em", color: "var(--text-strong)", flex: 1 }}>
+                {q.body}
+              </blockquote>
+              <figcaption style={{ display: "flex", alignItems: "center", gap: 14, paddingTop: 20, borderTop: "1px solid var(--border-default)" }}>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--wine-2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--cream-1)", letterSpacing: "0.04em" }}>{q.initials}</span>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 14, color: "var(--text-strong)", fontWeight: 500 }}>{q.who}</div>
+                  <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{q.role}</div>
+                </div>
+                <span style={{ border: "1px solid var(--border-default)", borderRadius: 999, padding: "4px 10px", fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-muted)", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
+                  {q.tag}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeSlideIn {
-          from {
-            opacity: 0;
-            transform: translateX(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        .animate-fadeSlideIn {
-          animation: fadeSlideIn 0.5s ease-out forwards;
-        }
-        @keyframes progress {
-          from { width: 0%; }
-          to { width: 100%; }
-        }
-      `}</style>
     </section>
   );
 }

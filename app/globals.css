@@ -3,40 +3,121 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* BrandXpo Brand Scale */
 :root {
-  --background: oklch(0.06 0.008 260);
-  --foreground: oklch(0.94 0.005 90);
-  --card: oklch(0.09 0.008 260);
-  --card-foreground: oklch(0.94 0.005 90);
-  --popover: oklch(0.09 0.008 260);
-  --popover-foreground: oklch(0.94 0.005 90);
-  --primary: oklch(0.94 0.005 90);
-  --primary-foreground: oklch(0.06 0.008 260);
-  --secondary: oklch(0.12 0.008 260);
-  --secondary-foreground: oklch(0.94 0.005 90);
-  --muted: oklch(0.12 0.008 260);
-  --muted-foreground: oklch(0.55 0.015 90);
-  --accent: oklch(0.14 0.01 260);
-  --accent-foreground: oklch(0.94 0.005 90);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.94 0.005 90);
-  --border: oklch(0.18 0.008 260);
-  --input: oklch(0.14 0.008 260);
-  --ring: oklch(0.94 0.005 90);
-  --chart-1: oklch(0.94 0.005 90);
-  --chart-2: oklch(0.72 0.01 90);
-  --chart-3: oklch(0.52 0.015 90);
-  --chart-4: oklch(0.35 0.01 90);
-  --chart-5: oklch(0.20 0.008 90);
+  /* Wine */
+  --wine-0:  oklch(0.10 0.05 22);
+  --wine-1:  oklch(0.16 0.07 22);
+  --wine-2:  oklch(0.22 0.10 22);
+  --wine-3:  oklch(0.30 0.11 22);
+  --wine-4:  oklch(0.40 0.12 22);
+  --wine-5:  oklch(0.52 0.13 22);
+  --wine-6:  oklch(0.68 0.10 22);
+  --wine-7:  oklch(0.82 0.06 22);
+  --wine-8:  oklch(0.92 0.03 22);
+
+  /* Cream */
+  --cream-0: oklch(0.99 0.01 85);
+  --cream-1: oklch(0.96 0.025 85);
+  --cream-2: oklch(0.93 0.035 85);
+  --cream-3: oklch(0.89 0.045 85);
+  --cream-4: oklch(0.83 0.055 85);
+  --cream-5: oklch(0.72 0.045 85);
+  --cream-6: oklch(0.55 0.035 85);
+  --cream-7: oklch(0.40 0.030 70);
+
+  /* Terracotta */
+  --terracotta-1: oklch(0.40 0.12 45);
+  --terracotta-2: oklch(0.52 0.15 45);
+  --terracotta-3: oklch(0.62 0.16 45);
+  --terracotta-4: oklch(0.72 0.14 50);
+  --terracotta-5: oklch(0.85 0.08 55);
+
+  /* Semantic surfaces */
+  --surface-page:    var(--cream-1);
+  --surface-canvas:  var(--cream-2);
+  --surface-card:    var(--cream-0);
+  --surface-raised:  var(--cream-0);
+  --surface-sunken:  var(--cream-3);
+  --surface-inverse: var(--wine-1);
+
+  /* Text */
+  --text-strong: var(--wine-0);
+  --text-body:   var(--wine-1);
+  --text-muted:  var(--cream-6);
+  --text-subtle: var(--cream-7);
+  --text-inverse: var(--cream-1);
+  --text-accent: var(--terracotta-2);
+
+  /* Borders */
+  --border-subtle:  var(--cream-4);
+  --border-default: color-mix(in oklab, var(--wine-1) 14%, transparent);
+  --border-strong:  var(--wine-1);
+  --border-focus:   var(--terracotta-3);
+
+  /* Brand */
+  --brand-primary:    var(--wine-1);
+  --brand-on-primary: var(--cream-1);
+  --brand-accent:     var(--terracotta-3);
+  --brand-on-accent:  var(--cream-0);
+
+  /* Motion */
+  --ease-standard:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-emphasized: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Tailwind semantic vars */
+  --background: oklch(0.96 0.025 85);
+  --foreground: oklch(0.10 0.05 22);
+  --card: oklch(0.99 0.01 85);
+  --card-foreground: oklch(0.10 0.05 22);
+  --popover: oklch(0.99 0.01 85);
+  --popover-foreground: oklch(0.10 0.05 22);
+  --primary: oklch(0.16 0.07 22);
+  --primary-foreground: oklch(0.96 0.025 85);
+  --secondary: oklch(0.93 0.035 85);
+  --secondary-foreground: oklch(0.10 0.05 22);
+  --muted: oklch(0.93 0.035 85);
+  --muted-foreground: oklch(0.55 0.035 85);
+  --accent: oklch(0.89 0.045 85);
+  --accent-foreground: oklch(0.10 0.05 22);
+  --destructive: oklch(0.50 0.19 25);
+  --destructive-foreground: oklch(0.99 0.01 85);
+  --border: color-mix(in oklab, oklch(0.16 0.07 22) 14%, transparent);
+  --input: oklch(0.89 0.045 85);
+  --ring: oklch(0.62 0.16 45);
   --radius: 0.25rem;
-  --sidebar: oklch(0.06 0.008 260);
-  --sidebar-foreground: oklch(0.94 0.005 90);
-  --sidebar-primary: oklch(0.94 0.005 90);
-  --sidebar-primary-foreground: oklch(0.06 0.008 260);
-  --sidebar-accent: oklch(0.12 0.008 260);
-  --sidebar-accent-foreground: oklch(0.94 0.005 90);
-  --sidebar-border: oklch(0.18 0.008 260);
-  --sidebar-ring: oklch(0.55 0.015 90);
+  --sidebar: oklch(0.99 0.01 85);
+  --sidebar-foreground: oklch(0.10 0.05 22);
+  --sidebar-primary: oklch(0.16 0.07 22);
+  --sidebar-primary-foreground: oklch(0.96 0.025 85);
+  --sidebar-accent: oklch(0.93 0.035 85);
+  --sidebar-accent-foreground: oklch(0.10 0.05 22);
+  --sidebar-border: color-mix(in oklab, oklch(0.16 0.07 22) 14%, transparent);
+  --sidebar-ring: oklch(0.62 0.16 45);
+}
+
+/* Wine dark override for hero/footer surfaces */
+.theme-wine {
+  --surface-page:    var(--wine-1);
+  --surface-canvas:  var(--wine-1);
+  --surface-card:    var(--wine-2);
+  --surface-raised:  var(--wine-3);
+  --surface-sunken:  var(--wine-0);
+  --surface-inverse: var(--cream-1);
+
+  --text-strong: var(--cream-0);
+  --text-body:   var(--cream-1);
+  --text-muted:  color-mix(in oklab, var(--cream-1) 55%, transparent);
+  --text-subtle: color-mix(in oklab, var(--cream-1) 35%, transparent);
+  --text-inverse: var(--wine-1);
+  --text-accent: var(--terracotta-4);
+
+  --border-subtle:  color-mix(in oklab, var(--cream-1) 8%, transparent);
+  --border-default: color-mix(in oklab, var(--cream-1) 16%, transparent);
+  --border-strong:  var(--cream-1);
+
+  --brand-primary:    var(--cream-1);
+  --brand-on-primary: var(--wine-1);
 }
 
 @theme inline {
@@ -62,11 +143,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -87,9 +163,18 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   html {
     scroll-behavior: smooth;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0;
   }
 }
 
@@ -97,110 +182,85 @@
   .font-display {
     font-family: var(--font-display);
   }
-  
+
   .text-stroke {
     -webkit-text-stroke: 1.5px currentColor;
     -webkit-text-fill-color: transparent;
   }
-  
-  .marquee {
-    animation: marquee 30s linear infinite;
-  }
-  
-  .marquee-reverse {
-    animation: marquee-reverse 25s linear infinite;
-  }
+}
 
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  
-  @keyframes marquee-reverse {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-  }
-  
-  .line-reveal {
-    clip-path: inset(0 100% 0 0);
-    animation: line-reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-  }
-  
-  @keyframes line-reveal {
-    to { clip-path: inset(0 0 0 0); }
-  }
-  
-  .hover-lift {
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
-  .hover-lift:hover {
-    transform: translateY(-4px);
-  }
-  
-  .letter-spin {
-    display: inline-block;
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
-  .letter-spin:hover {
-    transform: rotateY(360deg);
-  }
-  
-  .animate-char-in {
-    animation: char-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    opacity: 0;
-    transform: translateY(60%);
-  }
-  
-  @keyframes char-in {
-    0% {
-      opacity: 0;
-      transform: translateY(60%);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+@keyframes fillBar {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
 
-  .noise-overlay {
-    position: relative;
-  }
-  
-  .noise-overlay::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  .how-it-works-bg {
-    background-color: oklch(0.10 0.008 260);
-  }
+/* ===== BrandXpo responsive layout helpers ===== */
 
-  .word-gradient {
-    background: linear-gradient(
-      45deg,
-      #eca8d6 0%,
-      #a78bfa 25%,
-      #67e8f9 50%,
-      #fbbf24 75%,
-      #eca8d6 100%
-    );
-    background-size: 300% 300%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-shift 1.5s ease infinite;
-  }
+/* Nav */
+.bxp-nav-desktop { display: flex; gap: 36px; align-items: center; }
+.bxp-nav-cta     { display: flex; gap: 14px; align-items: center; }
+.bxp-hamburger   { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
 
-  @keyframes gradient-shift {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+/* Hero */
+.bxp-hero        { padding: 160px 48px 100px; }
+.bxp-hero-headline { max-width: 78%; }
+.bxp-hero-stats  {
+  position: absolute; bottom: -100px; left: 0px; right: 70px;
+  z-index: 2; display: flex; gap: 64px; flex-wrap: wrap;
+}
+
+/* Sections */
+.bxp-section-pad { padding: 120px 48px; }
+.bxp-cta-section { padding: 100px 48px; }
+.bxp-cta-inner   { padding: 80px 64px; }
+
+/* Grids */
+.bxp-grid-header       { display: grid; grid-template-columns: 7fr 5fr; gap: 32px; align-items: end; margin-bottom: 80px; }
+.bxp-grid-3            { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.bxp-grid-metrics      { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 24px; }
+.bxp-grid-header-sm    { display: grid; grid-template-columns: 7fr 5fr; gap: 32px; align-items: end; margin-bottom: 64px; }
+.bxp-grid-pricing      { display: grid; grid-template-columns: repeat(3, 1fr); }
+.bxp-grid-faq          { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+.bxp-grid-footer       { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; }
+
+/* Mobile overrides */
+@media (max-width: 768px) {
+  .bxp-nav-desktop { display: none; }
+  .bxp-nav-cta     { display: none; }
+  .bxp-hamburger   { display: flex; align-items: center; justify-content: center; }
+
+  .bxp-hero          { padding: 100px 24px 48px; flex-direction: column; align-items: flex-start; }
+  .bxp-hero-headline { max-width: 100%; }
+  .bxp-hero-stats    { position: static; padding-top: 40px; gap: 28px; }
+
+  .bxp-section-pad   { padding: 72px 24px; }
+  .bxp-cta-section   { padding: 64px 24px; }
+  .bxp-cta-inner     { padding: 40px 24px; }
+
+  .bxp-grid-header       { grid-template-columns: 1fr; margin-bottom: 48px; }
+  .bxp-grid-header-sm    { grid-template-columns: 1fr; margin-bottom: 40px; }
+  .bxp-grid-3            { grid-template-columns: 1fr; }
+  .bxp-grid-metrics      { grid-template-columns: 1fr; }
+  .bxp-grid-pricing      { grid-template-columns: 1fr; }
+  .bxp-grid-faq          { grid-template-columns: 1fr; gap: 40px; }
+  .bxp-grid-footer       { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Pricing highlight: remove negative margin when stacked */
+  .bxp-pricing-card-highlight { margin: 0 !important; }
+
+  /* Footer padding */
+  .bxp-footer-inner { padding: 56px 24px 28px !important; }
+}
+
+/* Mobile menu overlay */
+.bxp-mobile-menu {
+  display: none;
+  position: fixed; inset: 0; z-index: 49;
+  background: var(--wine-0);
+  flex-direction: column;
+  padding: 100px 32px 48px;
+}
+.bxp-mobile-menu.open { display: flex; }
+@media (min-width: 769px) {
+  .bxp-mobile-menu { display: none !important; }
 }
