@@ -1,27 +1,27 @@
-import { Navigation } from "@/components/landing/navigation";
-import { HeroSection } from "@/components/landing/hero-section";
-import { CapabilitiesSection } from "@/components/landing/features-section";
-import { MetricsSection } from "@/components/landing/metrics-section";
-import { ProcessSection } from "@/components/landing/how-it-works-section";
-import { TestimonialsSection } from "@/components/landing/testimonials-section";
-import { PricingSection } from "@/components/landing/pricing-section";
-import { FaqSection } from "@/components/landing/faq-section";
-import { CtaSection } from "@/components/landing/cta-section";
-import { FooterSection } from "@/components/landing/footer-section";
+import { Header } from "@/components/header"
+import { Hero } from "@/components/hero"
+import { Services } from "@/components/services"
+import { Projects } from "@/components/projects"
+import { Month } from "@/components/month"
+import { Process } from "@/components/process"
+import { Plans } from "@/components/plans"
+import { FAQ } from "@/components/faq"
+import { CallToAction } from "@/components/call-to-action"
+import { Footer } from "@/components/footer"
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden">
-      <Navigation />
-      <HeroSection />
-      <CapabilitiesSection />
-      <MetricsSection />
-      <ProcessSection />
-      <TestimonialsSection />
-      <PricingSection />
-      <FaqSection />
-      <CtaSection />
-      <FooterSection />
+    <main className="min-h-screen">
+      <Header />
+      <Hero />
+      <Services />
+      <Projects />
+      <Month />
+      <Process />
+      <Plans />
+      <FAQ />
+      <CallToAction />
+      <Footer />
     </main>
-  );
+  )
 }
