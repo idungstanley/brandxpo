@@ -1,129 +1,58 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* BrandXpo Brand Scale */
+/*
+  Monochrome palette: ink (near-black) and paper (white).
+  Every other value below is a mix of these two.
+*/
 :root {
-  /* Wine */
-  --wine-0:  oklch(0.10 0.05 22);
-  --wine-1:  oklch(0.16 0.07 22);
-  --wine-2:  oklch(0.22 0.10 22);
-  --wine-3:  oklch(0.30 0.11 22);
-  --wine-4:  oklch(0.40 0.12 22);
-  --wine-5:  oklch(0.52 0.13 22);
-  --wine-6:  oklch(0.68 0.10 22);
-  --wine-7:  oklch(0.82 0.06 22);
-  --wine-8:  oklch(0.92 0.03 22);
+  --ink: #0a0a0a;
+  --paper: #ffffff;
 
-  /* Cream */
-  --cream-0: oklch(0.99 0.01 85);
-  --cream-1: oklch(0.96 0.025 85);
-  --cream-2: oklch(0.93 0.035 85);
-  --cream-3: oklch(0.89 0.045 85);
-  --cream-4: oklch(0.83 0.055 85);
-  --cream-5: oklch(0.72 0.045 85);
-  --cream-6: oklch(0.55 0.035 85);
-  --cream-7: oklch(0.40 0.030 70);
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: color-mix(in srgb, var(--ink) 5%, var(--paper));
+  --secondary-foreground: var(--ink);
+  --muted: color-mix(in srgb, var(--ink) 8%, var(--paper));
+  --muted-foreground: color-mix(in srgb, var(--ink) 72%, var(--paper));
+  --accent: var(--ink);
+  --accent-foreground: var(--paper);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: color-mix(in srgb, var(--ink) 14%, var(--paper));
+  --input: color-mix(in srgb, var(--ink) 18%, var(--paper));
+  --ring: var(--ink);
+  --chart-1: var(--ink);
+  --chart-2: color-mix(in srgb, var(--ink) 70%, var(--paper));
+  --chart-3: color-mix(in srgb, var(--ink) 50%, var(--paper));
+  --chart-4: color-mix(in srgb, var(--ink) 30%, var(--paper));
+  --chart-5: color-mix(in srgb, var(--ink) 15%, var(--paper));
+  --radius: 0.75rem;
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ink);
 
-  /* Terracotta */
-  --terracotta-1: oklch(0.40 0.12 45);
-  --terracotta-2: oklch(0.52 0.15 45);
-  --terracotta-3: oklch(0.62 0.16 45);
-  --terracotta-4: oklch(0.72 0.14 50);
-  --terracotta-5: oklch(0.85 0.08 55);
-
-  /* Semantic surfaces */
-  --surface-page:    var(--cream-1);
-  --surface-canvas:  var(--cream-2);
-  --surface-card:    var(--cream-0);
-  --surface-raised:  var(--cream-0);
-  --surface-sunken:  var(--cream-3);
-  --surface-inverse: var(--wine-1);
-
-  /* Text */
-  --text-strong: var(--wine-0);
-  --text-body:   var(--wine-1);
-  --text-muted:  var(--cream-6);
-  --text-subtle: var(--cream-7);
-  --text-inverse: var(--cream-1);
-  --text-accent: var(--terracotta-2);
-
-  /* Borders */
-  --border-subtle:  var(--cream-4);
-  --border-default: color-mix(in oklab, var(--wine-1) 14%, transparent);
-  --border-strong:  var(--wine-1);
-  --border-focus:   var(--terracotta-3);
-
-  /* Brand */
-  --brand-primary:    var(--wine-1);
-  --brand-on-primary: var(--cream-1);
-  --brand-accent:     var(--terracotta-3);
-  --brand-on-accent:  var(--cream-0);
-
-  /* Motion */
-  --ease-standard:  cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-emphasized: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* Tailwind semantic vars */
-  --background: oklch(0.96 0.025 85);
-  --foreground: oklch(0.10 0.05 22);
-  --card: oklch(0.99 0.01 85);
-  --card-foreground: oklch(0.10 0.05 22);
-  --popover: oklch(0.99 0.01 85);
-  --popover-foreground: oklch(0.10 0.05 22);
-  --primary: oklch(0.16 0.07 22);
-  --primary-foreground: oklch(0.96 0.025 85);
-  --secondary: oklch(0.93 0.035 85);
-  --secondary-foreground: oklch(0.10 0.05 22);
-  --muted: oklch(0.93 0.035 85);
-  --muted-foreground: oklch(0.55 0.035 85);
-  --accent: oklch(0.89 0.045 85);
-  --accent-foreground: oklch(0.10 0.05 22);
-  --destructive: oklch(0.50 0.19 25);
-  --destructive-foreground: oklch(0.99 0.01 85);
-  --border: color-mix(in oklab, oklch(0.16 0.07 22) 14%, transparent);
-  --input: oklch(0.89 0.045 85);
-  --ring: oklch(0.62 0.16 45);
-  --radius: 0.25rem;
-  --sidebar: oklch(0.99 0.01 85);
-  --sidebar-foreground: oklch(0.10 0.05 22);
-  --sidebar-primary: oklch(0.16 0.07 22);
-  --sidebar-primary-foreground: oklch(0.96 0.025 85);
-  --sidebar-accent: oklch(0.93 0.035 85);
-  --sidebar-accent-foreground: oklch(0.10 0.05 22);
-  --sidebar-border: color-mix(in oklab, oklch(0.16 0.07 22) 14%, transparent);
-  --sidebar-ring: oklch(0.62 0.16 45);
-}
-
-/* Wine dark override for hero/footer surfaces */
-.theme-wine {
-  --surface-page:    var(--wine-1);
-  --surface-canvas:  var(--wine-1);
-  --surface-card:    var(--wine-2);
-  --surface-raised:  var(--wine-3);
-  --surface-sunken:  var(--wine-0);
-  --surface-inverse: var(--cream-1);
-
-  --text-strong: var(--cream-0);
-  --text-body:   var(--cream-1);
-  --text-muted:  color-mix(in oklab, var(--cream-1) 55%, transparent);
-  --text-subtle: color-mix(in oklab, var(--cream-1) 35%, transparent);
-  --text-inverse: var(--wine-1);
-  --text-accent: var(--terracotta-4);
-
-  --border-subtle:  color-mix(in oklab, var(--cream-1) 8%, transparent);
-  --border-default: color-mix(in oklab, var(--cream-1) 16%, transparent);
-  --border-strong:  var(--cream-1);
-
-  --brand-primary:    var(--cream-1);
-  --brand-on-primary: var(--wine-1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 @theme inline {
-  --font-sans: var(--font-instrument), 'Instrument Sans', system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), 'JetBrains Mono', monospace;
-  --font-display: var(--font-instrument-serif), 'Instrument Serif', Georgia, serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -143,6 +72,11 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -163,104 +97,147 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv11";
   }
   html {
     scroll-behavior: smooth;
   }
-  h1, h2, h3 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    margin: 0;
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  h1,
+  h2,
+  h3 {
+    font-weight: 600;
+    letter-spacing: -0.03em;
   }
 }
 
-@layer utilities {
-  .font-display {
-    font-family: var(--font-display);
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+html.lenis {
+  scroll-behavior: auto;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Small uppercase label, Medium 500 per the guide's label spec */
+@utility eyebrow {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ---------- Motion ---------- */
+
+/* Line-by-line headline reveal: the wrapper clips, the inner line rises */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.line-rise {
+  display: block;
+  transform: translateY(105%);
+  animation: line-rise 1.1s var(--ease-out-expo) forwards;
+}
+@keyframes line-rise {
+  to {
+    transform: translateY(0);
   }
+}
 
-  .text-stroke {
-    -webkit-text-stroke: 1.5px currentColor;
-    -webkit-text-fill-color: transparent;
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fade-up 0.9s var(--ease-out-expo) forwards;
+}
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes fillBar {
-  from { width: 0%; }
-  to   { width: 100%; }
+/* Symbol reveal: each piece is uncovered in place, never moved out of its lockup position */
+.wipe-down {
+  clip-path: inset(0 0 100% 0);
+  animation: wipe-down 0.9s var(--ease-in-out-quart) forwards;
+}
+@keyframes wipe-down {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.wipe-right {
+  clip-path: inset(0 100% 0 0);
+  animation: wipe-right 1.1s var(--ease-in-out-quart) forwards;
+}
+@keyframes wipe-right {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
-/* ===== BrandXpo responsive layout helpers ===== */
-
-/* Nav */
-.bxp-nav-desktop { display: flex; gap: 36px; align-items: center; }
-.bxp-nav-cta     { display: flex; gap: 14px; align-items: center; }
-.bxp-hamburger   { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-
-/* Hero */
-.bxp-hero        { padding: 160px 48px 100px; }
-.bxp-hero-headline { max-width: 78%; }
-.bxp-hero-stats  {
-  position: absolute; bottom: -100px; left: 0px; right: 70px;
-  z-index: 2; display: flex; gap: 64px; flex-wrap: wrap;
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
 }
 
-/* Sections */
-.bxp-section-pad { padding: 120px 48px; }
-.bxp-cta-section { padding: 100px 48px; }
-.bxp-cta-inner   { padding: 80px 64px; }
-
-/* Grids */
-.bxp-grid-header       { display: grid; grid-template-columns: 7fr 5fr; gap: 32px; align-items: end; margin-bottom: 80px; }
-.bxp-grid-3            { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.bxp-grid-metrics      { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 24px; }
-.bxp-grid-header-sm    { display: grid; grid-template-columns: 7fr 5fr; gap: 32px; align-items: end; margin-bottom: 64px; }
-.bxp-grid-pricing      { display: grid; grid-template-columns: repeat(3, 1fr); }
-.bxp-grid-faq          { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
-.bxp-grid-footer       { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; }
-
-/* Mobile overrides */
-@media (max-width: 768px) {
-  .bxp-nav-desktop { display: none; }
-  .bxp-nav-cta     { display: none; }
-  .bxp-hamburger   { display: flex; align-items: center; justify-content: center; }
-
-  .bxp-hero          { padding: 100px 24px 48px; flex-direction: column; align-items: flex-start; }
-  .bxp-hero-headline { max-width: 100%; }
-  .bxp-hero-stats    { position: static; padding-top: 40px; gap: 28px; }
-
-  .bxp-section-pad   { padding: 72px 24px; }
-  .bxp-cta-section   { padding: 64px 24px; }
-  .bxp-cta-inner     { padding: 40px 24px; }
-
-  .bxp-grid-header       { grid-template-columns: 1fr; margin-bottom: 48px; }
-  .bxp-grid-header-sm    { grid-template-columns: 1fr; margin-bottom: 40px; }
-  .bxp-grid-3            { grid-template-columns: 1fr; }
-  .bxp-grid-metrics      { grid-template-columns: 1fr; }
-  .bxp-grid-pricing      { grid-template-columns: 1fr; }
-  .bxp-grid-faq          { grid-template-columns: 1fr; gap: 40px; }
-  .bxp-grid-footer       { grid-template-columns: 1fr 1fr; gap: 32px; }
-
-  /* Pricing highlight: remove negative margin when stacked */
-  .bxp-pricing-card-highlight { margin: 0 !important; }
-
-  /* Footer padding */
-  .bxp-footer-inner { padding: 56px 24px 28px !important; }
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 24s linear infinite;
 }
 
-/* Mobile menu overlay */
-.bxp-mobile-menu {
-  display: none;
-  position: fixed; inset: 0; z-index: 49;
-  background: var(--wine-0);
-  flex-direction: column;
-  padding: 100px 32px 48px;
+/* Scroll-triggered reveal (paired with components/reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    transform 0.9s var(--ease-out-expo);
 }
-.bxp-mobile-menu.open { display: flex; }
-@media (min-width: 769px) {
-  .bxp-mobile-menu { display: none !important; }
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line-rise,
+  .fade-up,
+  .wipe-down,
+  .wipe-right {
+    animation: none;
+    transform: none;
+    opacity: 1;
+    clip-path: none;
+  }
+  .animate-marquee,
+  .animate-spin-slow {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
