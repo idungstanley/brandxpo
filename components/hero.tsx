@@ -62,15 +62,18 @@ export function Hero() {
   return (
     <section id="hero" ref={sectionRef} className="relative h-[300svh] bg-ink text-paper [--p:0]">
       <div className="sticky top-0 h-[100svh] overflow-hidden flex flex-col">
-        <div className="container mx-auto px-5 md:px-8 flex-1 grid lg:grid-cols-12 gap-6 lg:gap-10 pt-24 md:pt-28 pb-6 min-h-0">
+        {/* Mobile: a column where the 3D mark takes whatever height is left, so the
+            copy and button always fit above the marquee. Desktop: two columns. */}
+        <div className="container mx-auto px-5 md:px-8 flex-1 min-h-0 flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-10 pt-20 md:pt-28 pb-5 lg:pb-6">
           {/* 3D mark, held on the right while the copy changes */}
-          <div className="relative lg:col-span-6 lg:col-start-7 lg:order-2 min-h-0 h-[38svh] lg:h-auto">
+          <div className="relative flex-1 min-h-[96px] lg:min-h-0 lg:col-span-6 lg:col-start-7 lg:order-2">
             <Hero3D progress={progress} className="absolute inset-0 lg:-inset-x-10" />
           </div>
 
           {/* Chapter copy */}
-          <div className="relative lg:col-span-6 lg:row-start-1 lg:order-1 flex flex-col justify-center min-h-0">
-            <div className="relative min-h-[300px] sm:min-h-[340px] lg:min-h-[420px]">
+          <div className="relative shrink-0 lg:col-span-6 lg:row-start-1 lg:order-1 flex flex-col justify-center min-h-0">
+            {/* All chapters share one grid cell, so the block is exactly as tall as the longest one */}
+            <div className="grid items-center">
               {chapters.map((chapter, i) => {
                 const Heading = i === 0 ? "h1" : "h2"
                 const state = i === active ? "current" : i < active ? "past" : "future"
@@ -79,16 +82,16 @@ export function Hero() {
                     key={chapter.eyebrow}
                     aria-hidden={i !== active}
                     className={cn(
-                      "absolute inset-x-0 top-1/2 transition-all duration-700 ease-[var(--ease-out-expo)]",
-                      state === "current" && "opacity-100 -translate-y-1/2",
-                      state === "past" && "opacity-0 -translate-y-[calc(50%+40px)] pointer-events-none",
-                      state === "future" && "opacity-0 -translate-y-[calc(50%-40px)] pointer-events-none",
+                      "[grid-area:1/1] transition-all duration-700 ease-[var(--ease-out-expo)]",
+                      state === "current" && "opacity-100 translate-y-0",
+                      state === "past" && "opacity-0 -translate-y-10 pointer-events-none",
+                      state === "future" && "opacity-0 translate-y-10 pointer-events-none",
                     )}
                   >
-                    <p className="eyebrow text-paper/60 mb-6 fade-up" style={{ animationDelay: "0.1s" }}>
+                    <p className="eyebrow text-paper/60 mb-4 lg:mb-6 fade-up" style={{ animationDelay: "0.1s" }}>
                       {chapter.eyebrow}
                     </p>
-                    <Heading className="text-[2.6rem] leading-[1.02] sm:text-6xl xl:text-7xl mb-6">
+                    <Heading className="text-[2.2rem] leading-[1.04] sm:text-6xl xl:text-7xl mb-4 lg:mb-6">
                       {chapter.title.map((line, l) => (
                         <span key={line} className="line-mask">
                           <span className="line-rise" style={{ animationDelay: `${0.25 + l * 0.12}s` }}>
@@ -98,7 +101,7 @@ export function Hero() {
                       ))}
                     </Heading>
                     <p
-                      className="text-base sm:text-lg md:text-xl leading-relaxed text-paper/70 max-w-xl fade-up"
+                      className="text-[15px] sm:text-lg md:text-xl leading-relaxed text-paper/70 max-w-xl fade-up [@media(max-height:620px)]:hidden"
                       style={{ animationDelay: "0.7s" }}
                     >
                       {chapter.body}
@@ -108,7 +111,7 @@ export function Hero() {
               })}
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-6 fade-up" style={{ animationDelay: "0.9s" }}>
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-5 lg:mt-6 fade-up" style={{ animationDelay: "0.9s" }}>
               <Link
                 href="#contact"
                 className="group inline-flex items-center gap-3 rounded-full bg-paper text-ink px-6 sm:px-7 py-3.5 sm:py-4 text-sm font-medium transition-transform duration-300 hover:-translate-y-0.5"
